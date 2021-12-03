@@ -29,7 +29,7 @@ class DemoUITests: XCTestCase {
         
         for index in 1...7 {
             let filePath = testBundle.path(forResource: "voice_example_\(index)", ofType: "mp3")
-            print(index)
+        
             XCTAssertNotNil(filePath)
             
         }
@@ -55,22 +55,27 @@ class DemoUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         
-        
         let titleLabel = app.staticTexts["test"]
         
         XCTAssert(titleLabel.exists)
         
     }
     
-    func testSwipes () throws { // проверяем свайпы
+    func testSwipes () throws { // тест свайпов
         
         let app = XCUIApplication()
         app.launch()
+        let collectionView = app.collectionViews.element
         
-        let cellElement = app.collectionViews.cells.element(boundBy: 0)
+        XCTAssert(collectionView.exists) // проверяем существует ли коллекция
+        
+        let cellElement = collectionView.cells.element(boundBy: 0)
+        
+        XCTAssert(cellElement.exists)  // проверяем существует ли ячейка
         
         for _ in 1..<7 {
             cellElement.swipeLeft()
+            
         }
         
         for _ in 1..<7 {
@@ -84,18 +89,18 @@ class DemoUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         
-        let cellElement = app.collectionViews.cells.element(boundBy: 0)
+        let collectionView = app.collectionViews.element
+        
+        XCTAssert(collectionView.exists) // проверяем существует ли коллекция
+        
+        let cellElement = collectionView.cells.element(boundBy: 0)
+        
+        XCTAssert(cellElement.exists)  // проверяем существует ли ячейка
         
         cellElement.tap()
+        XCTAssert(cellElement.isSelected) // ячейка тапнута?
         
-        let expectation = expectation(description: "tap")
-        XCTWaiter.wait(for: [expectation], timeout: 5.0) // ждем 5 секунд
-        
-        cellElement.tap()
     }
-    
-    
-    
     
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
