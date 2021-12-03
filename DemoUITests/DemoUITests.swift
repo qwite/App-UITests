@@ -65,21 +65,35 @@ class DemoUITests: XCTestCase {
         
         let app = XCUIApplication()
         app.launch()
+        
+        let countCells: Int = 7
         let collectionView = app.collectionViews.element
         
         XCTAssert(collectionView.exists) // проверяем существует ли коллекция
         
-        let cellElement = collectionView.cells.element(boundBy: 0)
-        
-        XCTAssert(cellElement.exists)  // проверяем существует ли ячейка
-        
-        for _ in 1..<7 {
+        for index in 1..<countCells {
+            
+            let cellElement = collectionView.cells.element(boundBy: 0)
+            XCTAssert(cellElement.exists)  // проверяем существует ли ячейка
+            
+            let voiceLabel = cellElement.staticTexts["Voice example \(index)"]
+            XCTAssert(voiceLabel.exists) // проверяем наличие лейбла
+            
             cellElement.swipeLeft()
             
         }
         
-        for _ in 1..<7 {
+        for index in 1..<countCells {
+            
+            let cellElement = collectionView.cells.element(boundBy: 0)
+            XCTAssert(cellElement.exists)  // проверяем существует ли ячейка
+            
             cellElement.swipeRight()
+
+          
+            let voiceLabel = cellElement.staticTexts["Voice example \(countCells - index)"]
+            XCTAssert(voiceLabel.exists) // проверяем наличие лейбла
+            
         }
         
     }
@@ -99,6 +113,14 @@ class DemoUITests: XCTestCase {
         
         cellElement.tap()
         XCTAssert(cellElement.isSelected) // ячейка тапнута?
+        
+    }
+    
+    func testSomething() throws {
+        
+        let app = XCUIApplication()
+        app.launch()
+        
         
     }
     
